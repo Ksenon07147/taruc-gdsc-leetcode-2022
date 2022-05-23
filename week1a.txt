@@ -1,0 +1,53 @@
+//Java
+
+class Solution {
+    public int[] plusOne(int[] digits) {
+        //add last index 1
+        digits[digits.length-1] += 1;
+        //loop through array from behind if last element is = 10
+        //可以进位
+        if(digits[digits.length-1] == 10){
+            for(int i=digits.length-1;i>0;i--){
+                digits[i]=0;
+                digits[i-1]+=1;
+                
+                //if the front element not 10
+                //不用进位 break the loop
+                if(digits[i-1]!=10){
+                    break;
+                }
+            }
+        }
+        //if first element is 10
+        //make it 1 and push 0 behind
+        if(digits[0]==10){
+            digits[0] = 1;
+            digits = Arrays.copyOf(digits, digits.length + 1); 
+            digits[digits.length-1]=0;
+        }
+        return digits;
+    }
+}
+======================================================
+#Python
+
+class Solution(object):
+    def plusOne(self, digits):
+        largestCarry = 10 ** (len(digits)-1)
+        number = 0
+        for x in digits:
+            number += x * largestCarry
+            largestCarry/=10
+            if(largestCarry < 1):
+                break
+        number += 1
+        res = [int(x) for x in str(number)]
+        return res
+
+'''
+NOT RECONMMENDED
+[1,2,3] => 123 == +1 ==> 124 => [1,2,4]
+WORKS FOR EVERY NUMBER BUT DONT
+IT SLOWS DOWN THE PROCESS SPEED
+MORE BETTER METHOD IS WORKING IT IN ARRAY/LIST FORM
+'''
